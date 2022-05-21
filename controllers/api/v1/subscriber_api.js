@@ -42,7 +42,8 @@ module.exports.createSession = async function(req,res){
             message: "Signed in Successfully!!",
             data:{
                 token: jwt.sign(subscriber.toJSON(),'temp',{expiresIn:'1000000'})
-            }
+            },
+            user_id:subscriber.id
         });
     }catch(err){
 
