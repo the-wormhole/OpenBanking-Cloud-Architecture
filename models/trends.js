@@ -26,6 +26,10 @@ const trendsSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    SubCategory:{
+        type:String,
+        //required:true,
+    },
     NumCustomer:{           //number of customer of this type
         type:Number,
         required:true

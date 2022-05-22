@@ -4,16 +4,29 @@ const Subscriber = require('../../../models/subscriber');
 module.exports.createTrends = async function(req,res){
 
     try{
-        let newTrend = await Trend.create({
-            State:req.body.state,
-            Gender:req.body.gender,
-            BelowAge:req.body.age,
-            Region:req.body.region,
-            Bank:req.body.bank,
-            BType:req.body.type,
-            NumCustomer:req.body.num
-        });
-
+        let newTrend;
+        if(req.body.sub){
+            newTrend = await Trend.create({
+                State:req.body.state,
+                Gender:req.body.gender,
+                BelowAge:req.body.age,
+                Region:req.body.region,
+                Bank:req.body.bank,
+                BType:req.body.type,
+                SubCategory:req.body.sub,
+                NumCustomer:req.body.num
+            });
+        }else{
+            newTrend = await Trend.create({
+                State:req.body.state,
+                Gender:req.body.gender,
+                BelowAge:req.body.age,
+                Region:req.body.region,
+                Bank:req.body.bank,
+                BType:req.body.type,
+                NumCustomer:req.body.num
+            });
+        }
         return res.status(200).json({
             message:"Trend was added !!",
             trend:newTrend
@@ -52,11 +65,17 @@ module.exports.filter = async function(req,res){
         let type = sub.TypeOfOrg;
         //console.log(type);
         //let trends = await Trend.find({Bank:{$in:sub.Banks},})
-        let trends = await Trend.find({Region:req.body.region, BType:type});
+        let trends;
+        if(req.body.sub){
+            trends = await Trend.find({Region:req.body.region, BType:type, SubCategory:req.body.sub});
+        }else{
+            trends = await Trend.find({Region:req.body.region, BType:type});
+        }
         return res.status(200).json({
             message:"Returned filtered trends!!",
             trends:trends
-        })
+        });
+        
     }catch(err){
 
         console.log(err,"Error in filtering trends!!");

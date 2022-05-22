@@ -9,6 +9,7 @@ const subsriberSchema = new mongoose.Schema({
     },
     Email:{
         type:String,
+        unique:true,
         required:true
     },
     password:{
